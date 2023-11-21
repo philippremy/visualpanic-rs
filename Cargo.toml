@@ -7,6 +7,7 @@ version = "0.1.0"
 edition = "2021"
 categories = ["development-tools", "gui", "development-tools::debugging"]
 keywords = ["panic", "visualpanic", "gui", "debugging", "development-tools"]
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
