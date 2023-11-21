@@ -1,20 +1,76 @@
+//! # VisualPanic
+//!
+//! Visualize panics with native GUI dialogs on supported systems.
+//!
+//! Provides a solution to panic visually, useful for GUI applications where a console view might not be available at all times. Customizable in some ways, e.g., which icon, title and dialog level should be used.
+//!
+//! ## Example 1: Use the default settings and register for the whole application
+//! ```rust
+//! # use visualpanic_rs::VisualPanic;
+//!
+//! fn main() {
+//!     VisualPanic::default().register_global();
+//! }
+//! ```
+//!
+//! ## Example 2: Use custom settings and register for the whole application
+//! ```rust
+//! # use visualpanic_rs::VisualPanic;
+//! # use visualpanic_rs::VisualPanicLevel;
+//!
+//! fn main() {
+//!     VisualPanic::new(
+//!         Some("path/to/custom_icon.png"),
+//!         Some("Custom Title"),
+//!         Some(VisualPanicLevel::Info))
+//!     .register_global();
+//! }
+//!
+//! ```
+
 #![allow(warnings, unused)]
 #![feature(panic_info_message)]
 
+/// An enum stating the possible dialog levels
 #[derive(Clone)]
 pub enum VisualPanicLevel {
+    /// Error level
     Error,
+    /// Warning level (
     Warning,
+    /// Info level
     Info
 }
+
+/// The struct containing information on the current VisualPanic settings.
+/// Because all fields are optional to set, each one is wrapped in an [`Option<T>`].
 #[derive(Clone)]
 pub struct VisualPanic {
+    /// <div class="warning">Currently not implemented!</div>
+    /// Option to set a custom icon to be used.
+    /// Value must be set to a valid path, e.g.,
+    /// ```rust
+    /// Some(String::from("path/to/icon.png"));
+    /// ```
     custom_icon: Option<String>,
+    /// Option to set a custom title to be used.
+    /// Value can be set to any UTF-8 compliant [`String`], e.g.,
+    /// ```rust
+    /// Some(String::from("Custom String"));
+    /// ```
     custom_title: Option<String>,
+    /// Option to set a custom dialog level.
+    /// Value can be one option of [`VisualPanicLevel`], e.g.,
+    /// ```rust
+    /// # use visualpanic_rs::VisualPanicLevel;
+    /// Some(VisualPanicLevel::Error);
+    /// ```
     custom_level: Option<VisualPanicLevel>,
 }
 
+/// Provide public methods for [`VisualPanic`].
 impl VisualPanic {
+    /// Implements a default struct with all fields set to [`None`].
     pub fn default() -> Self {
         return VisualPanic {
             custom_icon: None,
@@ -23,6 +79,16 @@ impl VisualPanic {
         }
     }
 
+    /// Implements a new struct with custom options.
+    /// The icon, title and level of the dialog can be set using [`Option<T>`], e.g.,
+    /// ```rust
+    /// # use visualpanic_rs::{VisualPanic, VisualPanicLevel};
+    /// let visual_panic_options: VisualPanic = VisualPanic::new(
+    ///     Some("path/to/custom_icon.png"),
+    ///     Some("Custom Title"),
+    ///     Some(VisualPanicLevel::Info)
+    /// );
+    /// ```
     pub fn new(custom_icon: Option<&str>, custom_title: Option<&str>, custom_level: Option<VisualPanicLevel>) -> Self {
         let mut return_val = VisualPanic{
             custom_icon: None,
@@ -41,6 +107,9 @@ impl VisualPanic {
         return return_val;
     }
 
+    /// Registers a [`VisualPanic`] globally, i.e., for the whole application.
+    /// Returns currently nothing.
+    /// Will panic, if handling the &[`PanicInfo`] fails in any way or the native message dialog can not be spawned.
     pub fn register_global(self) {
 
         let clone = self.clone();
