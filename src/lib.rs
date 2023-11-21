@@ -2,13 +2,13 @@
 #![feature(panic_info_message)]
 
 #[derive(Clone)]
-enum VisualPanicLevel {
+pub enum VisualPanicLevel {
     Error,
     Warning,
     Info
 }
 #[derive(Clone)]
-struct VisualPanic {
+pub struct VisualPanic {
     custom_icon: Option<String>,
     custom_title: Option<String>,
     custom_level: Option<VisualPanicLevel>,
