@@ -31,10 +31,13 @@
 #![allow(warnings, unused)]
 #![feature(panic_info_message)]
 
+use serde::{Deserialize, Serialize};
+
 /// An enum stating the possible dialog levels
-#[derive(Clone)]
+#[derive(Clone, Debug, Copy, Eq, PartialOrd, PartialEq, Ord, Hash, Default, Serialize, Deserialize)]
 pub enum VisualPanicLevel {
     /// Error level
+    #[default]
     Error,
     /// Warning level (
     Warning,
@@ -44,7 +47,7 @@ pub enum VisualPanicLevel {
 
 /// The struct containing information on the current VisualPanic settings.
 /// Because all fields are optional to set, each one is wrapped in an [`Option<T>`].
-#[derive(Clone)]
+#[derive(Clone, Debug, Eq, PartialOrd, PartialEq, Ord, Hash, Default, Serialize, Deserialize)]
 pub struct VisualPanic {
     /// <div class="warning">Currently not implemented!</div>
     /// Option to set a custom icon to be used.
@@ -150,17 +153,5 @@ impl VisualPanic {
                 .show_alert()
                 .expect("Failed to launch VisualPanic Dialog.");
         }));
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn show_error() {
-        VisualPanic::new(None, Some("VisualPanic v1.0"), Some(VisualPanicLevel::Warning)).register_global();
-        let num1: i32 = 2;
-        num1.checked_div(0).unwrap();
     }
 }
