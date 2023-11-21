@@ -1,13 +1,12 @@
 //! # VisualPanic
 //!
-//! Visualize panics with native GUI dialogs on supported systems.
+//! Visualize panics with native GUI dialogs on supported systems (see list at https://crates.io/crates/native-dialog).
 //!
 //! Provides a solution to panic visually, useful for GUI applications where a console view might not be available at all times. Customizable in some ways, e.g., which icon, title and dialog level should be used.
 //!
 //! ## Example 1: Use the default settings and register for the whole application
 //! ```rust
 //! # use visualpanic_rs::VisualPanic;
-//!
 //! fn main() {
 //!     VisualPanic::default().register_global();
 //! }
@@ -17,7 +16,6 @@
 //! ```rust
 //! # use visualpanic_rs::VisualPanic;
 //! # use visualpanic_rs::VisualPanicLevel;
-//!
 //! fn main() {
 //!     VisualPanic::new(
 //!         Some("path/to/custom_icon.png"),
@@ -25,7 +23,6 @@
 //!         Some(VisualPanicLevel::Info))
 //!     .register_global();
 //! }
-//!
 //! ```
 
 #![allow(warnings, unused)]
@@ -46,7 +43,6 @@ pub enum VisualPanicLevel {
 }
 
 /// The struct containing information on the current VisualPanic settings.
-/// Because all fields are optional to set, each one is wrapped in an [`Option<T>`].
 #[derive(Clone, Debug, Eq, PartialOrd, PartialEq, Ord, Hash, Default, Serialize, Deserialize)]
 pub struct VisualPanic {
     /// <div class="warning">Currently not implemented!</div>
@@ -112,7 +108,7 @@ impl VisualPanic {
 
     /// Registers a [`VisualPanic`] globally, i.e., for the whole application.
     /// Returns currently nothing.
-    /// Will panic, if handling the &[`PanicInfo`] fails in any way or the native message dialog can not be spawned.
+    /// Will panic, if handling the &[`std::panic::PanicInfo`] fails in any way or the native message dialog can not be spawned.
     pub fn register_global(self) {
 
         let clone = self.clone();
