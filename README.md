@@ -13,7 +13,7 @@ cargo add visualpanic_rs
 
 ## Example 1: Use the default settings and register for the whole application
 ```rust
-# use visualpanic_rs::VisualPanic;
+use visualpanic_rs::VisualPanic;
 fn main() {
      VisualPanic::default().register_global();
 }
@@ -21,8 +21,8 @@ fn main() {
 
 ## Example 2: Use custom settings and register for the whole application
 ```rust
-# use visualpanic_rs::VisualPanic;
-# use visualpanic_rs::VisualPanicLevel;
+use visualpanic_rs::VisualPanic;
+use visualpanic_rs::VisualPanicLevel;
 fn main() {
      VisualPanic::new(
          Some("path/to/custom_icon.png"),
